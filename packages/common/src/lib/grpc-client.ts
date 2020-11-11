@@ -1,5 +1,6 @@
-import { Metadata } from 'grpc-web';
+import { CallOptions, Metadata } from 'grpc-web';
 import { Observable } from 'rxjs';
+
 import { GrpcEvent } from './grpc-event';
 import { GrpcMessage } from './grpc-message';
 import { GrpcMessageClass } from './grpc-message-class';
@@ -32,6 +33,7 @@ export interface GrpcClient {
    * @param path gRPC method path (rpc path)
    * @param req request data
    * @param metadata request metadata
+   * @param options request call options
    * @param reqclss request message class
    * @param resclss response message class
    */
@@ -39,6 +41,7 @@ export interface GrpcClient {
     path: string,
     req: Q,
     metadata: Metadata,
+    options: CallOptions,
     reqclss: GrpcMessageClass<Q>,
     resclss: GrpcMessageClass<S>,
   ): Observable<GrpcEvent<S>>;
@@ -48,6 +51,7 @@ export interface GrpcClient {
    * @param path gRPC method path (rpc path)
    * @param req request data
    * @param metadata request metadata
+   * @param options request call options
    * @param reqclss request message class
    * @param resclss response message class
    */
@@ -55,6 +59,7 @@ export interface GrpcClient {
     path: string,
     req: Q,
     metadata: Metadata,
+    options: CallOptions,
     reqclss: GrpcMessageClass<Q>,
     resclss: GrpcMessageClass<S>
   ): Observable<GrpcEvent<S>>;
@@ -87,6 +92,7 @@ export interface GrpcRequest<Q extends GrpcMessage, S extends GrpcMessage> {
   type: GrpcCallType;
   requestData: Q;
   requestMetadata: Metadata;
+  requestOptions: CallOptions;
   requestClass: GrpcMessageClass<Q>;
   responseClass: GrpcMessageClass<S>;
 }

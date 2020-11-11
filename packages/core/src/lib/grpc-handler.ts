@@ -1,6 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { GrpcCallType, GrpcEvent, GrpcMessage, GrpcRequest } from '@ngx-grpc/common';
 import { Observable } from 'rxjs';
+
 import { GrpcInterceptor } from './grpc-interceptor';
 import { GRPC_INTERCEPTORS } from './injection-tokens';
 
@@ -41,6 +42,7 @@ export class GrpcHandler {
         request.path,
         request.requestData,
         request.requestMetadata,
+        request.requestOptions,
         request.requestClass,
         request.responseClass,
       );
@@ -50,6 +52,7 @@ export class GrpcHandler {
       request.path,
       request.requestData,
       request.requestMetadata,
+      request.requestOptions,
       request.requestClass,
       request.responseClass,
     );

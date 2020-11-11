@@ -1,7 +1,17 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { GrpcClient, GrpcClientFactory, GrpcClientSettings, GrpcDataEvent, GrpcEvent, GrpcMessage, GrpcMessageClass, GrpcStatusEvent } from '@ngx-grpc/common';
-import { AbstractClientBase, GrpcWebClientBase, Metadata } from 'grpc-web';
+import {
+  GrpcClient,
+  GrpcClientFactory,
+  GrpcClientSettings,
+  GrpcDataEvent,
+  GrpcEvent,
+  GrpcMessage,
+  GrpcMessageClass,
+  GrpcStatusEvent,
+} from '@ngx-grpc/common';
+import { AbstractClientBase, CallOptions, GrpcWebClientBase, Metadata } from 'grpc-web';
 import { Observable } from 'rxjs';
+
 import { GRPC_WEB_CLIENT_DEFAULT_SETTINGS } from './tokens';
 
 /**
@@ -45,6 +55,7 @@ export class GrpcWebClient implements GrpcClient {
     path: string,
     req: Q,
     metadata: Metadata,
+    options: CallOptions,
     reqclss: GrpcMessageClass<Q>,
     resclss: GrpcMessageClass<S>,
   ): Observable<GrpcEvent<S>> {
@@ -53,6 +64,7 @@ export class GrpcWebClient implements GrpcClient {
         this.settings.host + path,
         req,
         metadata || {},
+        options || {},
         new AbstractClientBase.MethodInfo(
           resclss,
           (request: Q) => request.serializeBinary(),
@@ -80,6 +92,7 @@ export class GrpcWebClient implements GrpcClient {
     path: string,
     req: Q,
     metadata: Metadata,
+    options: CallOptions,
     reqclss: GrpcMessageClass<Q>,
     resclss: GrpcMessageClass<S>
   ): Observable<GrpcEvent<S>> {
@@ -88,6 +101,7 @@ export class GrpcWebClient implements GrpcClient {
         this.settings.host + path,
         req,
         metadata || {},
+        options || {},
         new AbstractClientBase.MethodInfo(resclss, (request: Q) => request.serializeBinary(), resclss.deserializeBinary)
       );
 
